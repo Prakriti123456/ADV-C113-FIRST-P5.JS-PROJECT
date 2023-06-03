@@ -1,32 +1,31 @@
 function preload(){
-
 }
 
 function setup(){
-    canvas=createCanvas(640,470);
-    canvas.position(110,200);
-    video=createCapture(VIDEO);
-    video.hide();
-
+canvas=createCanvas(300,300);
+canvas.center();
+video=createCapture(VIDEO);
+video.size(300,300);
+video.hide();
+poseNet=ml5.poseNet(video,modelLoaded);
 }
-function draw() {
-    image(video,170,85,290,310);
 
-    fill(2, 36, 251  );
-    stroke(2, 36, 251);
-    circle(50, 426, 80);
-    circle(590, 50, 80);
-    circle(50, 50, 80); 
-    circle(590, 426, 80);
-
-    fill(2, 191, 251);
-    stroke(2, 191, 251);
-    rect(90, 40, 460, 20);
-    rect(90, 420, 460, 20);
-    rect(40, 90, 25, 295);
-    rect(580, 90, 25, 295);
+function draw(){
+    image(video,0,0,300,300);
 }
 
 function take_snapshot(){
-save("image.png");
+    save('myFilterImage.png');
+}
+
+function modelLoaded(){
+    console.log('PoseNet Is Initialized');
+}
+
+function gotPoses(results){
+    if(results.length>0){
+        console.log(results);
+        console.log("nose x = "+results[0].pose.nose.x);
+        console.log("nose y = "+results[0].pose.nose.y);
+    }
 }
